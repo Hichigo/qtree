@@ -6,10 +6,10 @@ qtree::qtree()
 
 	root = nullptr;
 
-	leftX = -1;
-	rightX = 2;
-	topY = -1;
-	botY = 2;
+	leftX = -10;
+	rightX = 10;
+	topY = -10;
+	botY = 10;
 
 }
 
@@ -219,37 +219,37 @@ void qtree::check_sides(node *leaf)
 	{
 		check_sides(leaf->top);
 	}
-	else
-	{
-		leaf->bTop = false;
-	}
+	//else
+	//{
+	//	leaf->bTop = false;
+	//}
 
 	if (leaf->right != nullptr)
 	{
 		check_sides(leaf->right);
 	}
-	else
-	{
-		leaf->bRight = false;
-	}
+	//else
+	//{
+	//	leaf->bRight = false;
+	//}
 
 	if (leaf->bottom != nullptr)
 	{
 		check_sides(leaf->bottom);
 	}
-	else
-	{
-		leaf->bBottom = false;
-	}
+	//else
+	//{
+	//	leaf->bBottom = false;
+	//}
 
 	if (leaf->left != nullptr)
 	{
 		check_sides(leaf->left);
 	}
-	else
-	{
-		leaf->bLeft = false;
-	}
+	//else
+	//{
+	//	leaf->bLeft = false;
+	//}
 }
 
 void qtree::insert(int x, int y, int i, bool t, bool r, bool b, bool l, node *leaf, node *parent)
@@ -327,6 +327,7 @@ void qtree::write_to_file()
 {
 	ofstream debug;
 	debug.open("debug.txt");
+	debug << "[";
 	for (vector<node>::iterator it = nodes.begin(); it < nodes.end(); ++it)
 	{
 		debug << "{" << endl;
@@ -336,7 +337,8 @@ void qtree::write_to_file()
 		debug << "\"r\": " << it->bRight << "," << endl;
 		debug << "\"b\": " << it->bBottom << "," << endl;
 		debug << "\"l\": " << it->bLeft << endl;
-		debug << "}" << endl;
+		debug << "}," << endl;
 	}
+	debug << "]";
 	debug.close();
 }
