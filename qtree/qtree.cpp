@@ -47,6 +47,7 @@ void qtree::destroy_qtree()
 
 void qtree::fill_qtree()
 {
+	// here first room
 	root = new node;
 	root->x = 0;
 	root->y = 0;
