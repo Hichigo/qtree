@@ -6,132 +6,41 @@ qtree::qtree()
 
 	root = nullptr;
 
-	leftX = -10;
-	rightX = 10;
-	topY = -10;
-	botY = 10;
+	leftX = -3;
+	rightX = 5;
+	topY = -5;
+	botY = 3;
 
 }
 
 qtree::~qtree()
 {
-	destroy_tree();
+	destroy_qtree();
 }
 
-void qtree::destroy_tree(node *leaf)
+void qtree::destroy_qtree(node *leaf) 
 {
 	if (leaf != nullptr)
 	{
-		//destroy_tree(leaf->top);
-		destroy_tree(leaf->right);
-		//destroy_tree(leaf->bottom);
-		destroy_tree(leaf->left);
+		if (leaf->top != nullptr)
+			destroy_qtree(leaf->top);
+		
+		if (leaf->right != nullptr)
+			destroy_qtree(leaf->right);
+
+		if (leaf->bottom != nullptr)
+			destroy_qtree(leaf->bottom);
+
+		if (leaf->left != nullptr)
+			destroy_qtree(leaf->left);
+
 		delete leaf;
 	}
 }
 
-void qtree::destroy_tree()
+void qtree::destroy_qtree()
 {
-	destroy_tree(root);
-}
-
-void qtree::insert(int x, int y, node *leaf)
-{
-	if (x >= leaf->x)
-	{
-		if (leaf->right != nullptr)
-		{
-			insert(x, 0, leaf->right);
-		}
-		else
-		{
-			leaf->right = new node;
-			leaf->right->x = x;
-			leaf->right->left = nullptr;
-			leaf->right->right = nullptr;
-		}
-	}
-	else if (x < leaf->x)
-	{
-		if (leaf->left != nullptr)
-		{
-			insert(x, 0, leaf->left);
-		}
-		else
-		{
-			leaf->left = new node;
-			leaf->left->x = x;
-			leaf->left->left = nullptr;
-			leaf->left->right = nullptr;
-		}
-	}
-}
-
-void qtree::insert(int x, int y)
-{
-	if (root != nullptr)
-	{
-		insert(x, y, root);
-	}
-	else
-	{
-		root = new node;
-		root->x = x;
-		root->left = nullptr;
-		root->right = nullptr;
-	}
-}
-
-void qtree::print_tree()
-{
-	print(root, 0);
-}
-
-void qtree::print(node *leaf, int depth)
-{
-	if (leaf == nullptr)
-	{
-		return;
-	}
-	else
-	{
-		print(leaf->left, ++depth);
-		for (int i = 0; i < depth; ++i)
-		{
-			cout << "|";
-		}
-		cout << leaf->x << endl;
-		depth--;
-	}
-	print(leaf->right, ++depth);
-}
-
-node *qtree::search(int x, int y)
-{
-	return search(x, y, root);
-}
-
-node *qtree::search(int x, int y, node *leaf)
-{
-	if (leaf != nullptr)
-	{
-		if (x == leaf->x)
-		{
-			return leaf;
-		}
-		if (x < leaf->x)
-		{
-			return search(x, y, leaf->left);
-		}
-		else
-		{
-			return search(x, y, leaf->right);
-		}
-	}
-	else
-	{
-		return nullptr;
-	}
+	destroy_qtree(root);
 }
 
 void qtree::fill_qtree()
@@ -139,6 +48,8 @@ void qtree::fill_qtree()
 	root = new node;
 	root->x = 0;
 	root->y = 0;
+
+	root->index = 0;
 	
 	root->bTop = true;
 	root->bRight = true;

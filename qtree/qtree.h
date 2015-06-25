@@ -1,15 +1,15 @@
 /*
-	НУЖНО БОЛЬШЕ КОММЕНТАРИЕВ
+	need more comments (it's for me :) )
 */
 
 #pragma once
 #include <iostream>
-#include <fstream>
+#include <fstream> //debug
 #include <ctime>
 #include <vector>
 using namespace std;
 
-struct node {
+struct node { // struct room
 	int x;
 	int y;
 	int index;
@@ -29,31 +29,23 @@ public:
 	qtree();
 	~qtree();
 
-	void insert(int x, int y);
 	void fill_qtree();
-	node *search(int x, int y);
-	void destroy_tree();
-	void print_tree();
-	void print_qtree();
-	void write_to_file();
+	void destroy_qtree();
+	void print_qtree(); // debug
+	void write_to_file(); //debug
 
 private:
-	void destroy_tree(node *leaf);
-	void insert(int x, int y, node *leaf);
-	node *search(int x, int y, node *leaf);
-	void print(node *leaf, int depth);
-
-	//qtree
+	void destroy_qtree(node *leaf); // something wrong (bug)
 	void insert(int x, int y, int i, bool t, bool r, bool b, bool l, node *leaf, node *parent);
 	void check_sides(node *leaf);
 	bool search_by_coordinates(int x, int y);
 
 	node *root;
-	vector<node> nodes;
+	vector<node> nodes; // need for search (i don't know may be wrong)
 
-	// ограничивающий генерацию квадрат (-1, -1) (2, 2)
-	int leftX; // x слева -1
-	int rightX; // x справа 2
-	int topY; // y сверху -1
-	int botY; // y снизу 2
+	// limitation coordinates (-1, -1) (2, 2)
+	int leftX; // x max left -1
+	int rightX; // x max right 2
+	int topY; // y max top -1
+	int botY; // y max bottom 2
 };
