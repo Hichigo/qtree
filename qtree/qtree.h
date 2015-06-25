@@ -32,7 +32,7 @@ public:
 	void fill_qtree();
 	void destroy_qtree();
 	void print_qtree(); // debug
-	void write_to_file(); //debug
+	void write_to_file(); // debug
 
 private:
 	void destroy_qtree(node *leaf); // something wrong (bug)
@@ -42,6 +42,8 @@ private:
 
 	node *root;
 	vector<node> nodes; // need for search (i don't know may be wrong)
+
+	int i;
 
 	// limitation coordinates (-1, -1) (2, 2)
 	int leftX; // x max left -1

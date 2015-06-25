@@ -6,6 +6,8 @@ qtree::qtree()
 
 	root = nullptr;
 
+	i = 0;
+
 	leftX = -3;
 	rightX = 5;
 	topY = -5;
@@ -49,12 +51,12 @@ void qtree::fill_qtree()
 	root->x = 0;
 	root->y = 0;
 
-	root->index = 0;
+	root->index = i;
 	
 	root->bTop = true;
-	root->bRight = true;
+	root->bRight = false;
 	root->bBottom = true;
-	root->bLeft = true;
+	root->bLeft = false;
 
 	root->top = nullptr;
 	root->right = nullptr;
@@ -68,13 +70,13 @@ void qtree::fill_qtree()
 
 void qtree::check_sides(node *leaf)
 {
-	//проверяем верх
+	// check top
 	if ((leaf->y - 1) >= topY && !search_by_coordinates(leaf->x, leaf->y - 1))
 	{
 		if (leaf->bTop)
 		{
 			leaf->top = new node;
-			insert(leaf->x, leaf->y - 1, 0, false, false, true, false, leaf->top, leaf);
+			insert(leaf->x, leaf->y - 1, ++i, false, false, true, false, leaf->top, leaf);
 		}
 	}
 	else
@@ -82,13 +84,13 @@ void qtree::check_sides(node *leaf)
 		leaf->bTop = false;
 		leaf->top = nullptr;
 	}
-	//проверяем правую сторону
+	// check right side
 	if ((leaf->x + 1) <= rightX && !search_by_coordinates(leaf->x + 1, leaf->y))
 	{
 		if (leaf->bRight)
 		{
 			leaf->right = new node;
-			insert(leaf->x + 1, leaf->y, 0, false, false, false, true, leaf->right, leaf);
+			insert(leaf->x + 1, leaf->y, ++i, false, false, false, true, leaf->right, leaf);
 		}
 	}
 	else
@@ -96,13 +98,13 @@ void qtree::check_sides(node *leaf)
 		leaf->bRight = false;
 		leaf->right = nullptr;
 	}
-	//проверяем низ
+	// check bottom
 	if ((leaf->y + 1) <= botY && !search_by_coordinates(leaf->x, leaf->y + 1))
 	{
 		if (leaf->bBottom)
 		{
 			leaf->bottom = new node;
-			insert(leaf->x, leaf->y + 1, 0, true, false, false, false, leaf->bottom, leaf);
+			insert(leaf->x, leaf->y + 1, ++i, true, false, false, false, leaf->bottom, leaf);
 		}
 	}
 	else
@@ -110,13 +112,13 @@ void qtree::check_sides(node *leaf)
 		leaf->bBottom = false;
 		leaf->bottom = nullptr;
 	}
-	//проверяем левую сторону
+	// check left side
 	if ((leaf->x - 1) >= leftX && !search_by_coordinates(leaf->x - 1, leaf->y))
 	{
 		if (leaf->bLeft)
 		{
 			leaf->left = new node;
-			insert(leaf->x - 1, leaf->y, 0, false, true, false, false, leaf->left, leaf);
+			insert(leaf->x - 1, leaf->y, ++i, false, true, false, false, leaf->left, leaf);
 		}
 	}
 	else
@@ -125,7 +127,7 @@ void qtree::check_sides(node *leaf)
 		leaf->left = nullptr;
 	}
 
-	// если сторона не пустая то добавляем "лист"
+	// if side !empty try add leaf
 	if (leaf->top != nullptr)
 	{
 		check_sides(leaf->top);
@@ -244,6 +246,7 @@ void qtree::write_to_file()
 		debug << "{" << endl;
 		debug << "\"x\": " << it->x << "," << endl;
 		debug << "\"y\": " << it->y << "," << endl;
+		debug << "\"i\": " << it->index << "," << endl;
 		debug << "\"t\": " << it->bTop << "," << endl;
 		debug << "\"r\": " << it->bRight << "," << endl;
 		debug << "\"b\": " << it->bBottom << "," << endl;
