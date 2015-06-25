@@ -1,3 +1,7 @@
+/*
+	мсфмн анкэье йнллемрюпхеб
+*/
+
 #pragma once
 #include <iostream>
 #include <ctime>
