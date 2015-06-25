@@ -144,6 +144,7 @@ void main()
 	tree.fill_qtree();
 
 	tree.print_qtree();
+	tree.write_to_file();
 
 
 	/*

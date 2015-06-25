@@ -200,7 +200,7 @@ void qtree::check_sides(node *leaf)
 		leaf->bottom = nullptr;
 	}
 	//проверяем левую сторону
-	if ((leaf->x - 1) <= leftX && !search_by_coordinates(leaf->x - 1, leaf->y))
+	if ((leaf->x - 1) >= leftX && !search_by_coordinates(leaf->x - 1, leaf->y))
 	{
 		if (leaf->bLeft)
 		{
@@ -214,21 +214,41 @@ void qtree::check_sides(node *leaf)
 		leaf->left = nullptr;
 	}
 
+	// если сторона не пустая то добавляем "лист"
 	if (leaf->top != nullptr)
 	{
 		check_sides(leaf->top);
 	}
+	else
+	{
+		leaf->bTop = false;
+	}
+
 	if (leaf->right != nullptr)
 	{
 		check_sides(leaf->right);
 	}
+	else
+	{
+		leaf->bRight = false;
+	}
+
 	if (leaf->bottom != nullptr)
 	{
 		check_sides(leaf->bottom);
 	}
+	else
+	{
+		leaf->bBottom = false;
+	}
+
 	if (leaf->left != nullptr)
 	{
 		check_sides(leaf->left);
+	}
+	else
+	{
+		leaf->bLeft = false;
 	}
 }
 
@@ -301,4 +321,22 @@ void qtree::print_qtree()
 		cout << it->bBottom << " ";
 		cout << it->bLeft << endl << endl;
 	}
+}
+
+void qtree::write_to_file()
+{
+	ofstream debug;
+	debug.open("debug.txt");
+	for (vector<node>::iterator it = nodes.begin(); it < nodes.end(); ++it)
+	{
+		debug << "{" << endl;
+		debug << "\"x\": " << it->x << "," << endl;
+		debug << "\"y\": " << it->y << "," << endl;
+		debug << "\"t\": " << it->bTop << "," << endl;
+		debug << "\"r\": " << it->bRight << "," << endl;
+		debug << "\"b\": " << it->bBottom << "," << endl;
+		debug << "\"l\": " << it->bLeft << endl;
+		debug << "}" << endl;
+	}
+	debug.close();
 }

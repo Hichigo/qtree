@@ -4,6 +4,7 @@
 
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <ctime>
 #include <vector>
 using namespace std;
@@ -34,6 +35,7 @@ public:
 	void destroy_tree();
 	void print_tree();
 	void print_qtree();
+	void write_to_file();
 
 private:
 	void destroy_tree(node *leaf);
